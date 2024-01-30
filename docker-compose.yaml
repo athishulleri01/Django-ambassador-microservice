@@ -10,16 +10,28 @@ services:
       - db
       - redis
 
+  # db:
+  #   image: mysql:5.7.22
+  #   restart: always
+  #   environment:
+  #     MYSQL_DATABASE: ambassador
+  #     MYSQL_USER: root
+  #     MYSQL_PASSWORD: root
+  #     MYSQL_ROOT_PASSWORD: root
+  #   volumes:
+  #     - .dbdata:/var/lib/postgres
   db:
-    image: mysql:5.7.22
+    container_name: db
+    image: postgres:12
     restart: always
     environment:
-      MYSQL_DATABASE: ambassador
-      MYSQL_USER: root
-      MYSQL_PASSWORD: root
-      MYSQL_ROOT_PASSWORD: root
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres
+      - POSTGRES_DB=ambassador
+   
+      
     volumes:
-      - .dbdata:/var/lib/mysql
+      - ./.dbdata:/var/lib/postgresql/data
 
   redis:
     image: redis
